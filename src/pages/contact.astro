@@ -1,8 +1,116 @@
 ---
-import ContactUs from "../components/ContactUs";
+import Heading from "../components/Heading.astro";
+import SpinnerLoader from "../components/SpinnerLoader.astro";
+import ComponentLayout from "../layouts/ComponentLayout.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-  <ContactUs />
+<Layout
+  head={{
+    title: "Contact Us | Zepto Sign Customizer",
+    jsCDNs: [
+      "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js",
+    ],
+  }}
+>
+  <div class="pt-28 bg-gradient-to-b from-background/30 to-background/90 pb-24">
+    <ComponentLayout>
+      <Heading>Contact Us</Heading>
+      <div class="max-w-3xl mx-auto">
+        <form class="w-full flex flex-col gap-5">
+          <label for="from_name" class="flex flex-col gap-1">
+            Name
+            <input
+              type="text"
+              name="from_name"
+              placeholder="Name"
+              class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
+            />
+          </label>
+          <label for="reply_to" class="flex flex-col gap-1">
+            Email
+            <input
+              required
+              name="reply_to"
+              placeholder="Email"
+              type="email"
+              class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
+            />
+          </label>
+          <label for="myshopify_url" class="flex flex-col gap-1">
+            Myshopify URL
+            <input
+              type="url"
+              name="myshopify_url"
+              placeholder="Myshopify URL"
+              class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
+            />
+          </label>
+          <label for="message" class="flex flex-col gap-1">
+            Message
+            <textarea
+              required
+              name="message"
+              placeholder="Message"
+              rows="4"
+              class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
+            ></textarea>
+          </label>
+          <button
+            id="submitBtn"
+            type="submit"
+            class="bg-accent hover:ring-2 hover:ring-secondary px-4 py-3 rounded-lg text-background font-semibold transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <span>Send</span>
+            <span style="display: none;">
+              <SpinnerLoader />
+            </span>
+          </button>
+          <span
+            id="successMessage"
+            style="display: none;"
+            class="text-sm text-center bg-accent_2 py-0.5 rounded-full text-white w-1/2 mx-auto"
+            >Message sent successfully!</span
+          >
+        </form>
+      </div>
+    </ComponentLayout>
+  </div>
 </Layout>
+
+<script>
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const submitBtn = document.getElementById("submitBtn");
+    const successMessage = document.getElementById("successMessage");
+
+    const serviceID = "zepto_service_ugmln2a";
+    const templateID = "zepto_template_ivzhjnf";
+    const publicKey = "5Yat8qUG0lo9avjxi";
+
+    try {
+      submitBtn.querySelector("span:first-child").style.display = "none";
+      submitBtn.querySelector("span:last-child").style.display = "inline";
+      submitBtn.disabled = true;
+      await emailjs.sendForm(serviceID, templateID, form, publicKey);
+      form.reset();
+      successMessage.style.display = "block";
+      setTimeout(() => {
+        successMessage.style.display = "none";
+      }, 3000);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      submitBtn.querySelector("span:last-child").style.display = "none";
+      submitBtn.querySelector("span:first-child").style.display = "inline";
+      submitBtn.disabled = false;
+    }
+  };
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", handleSubmit);
+  });
+</script>
