@@ -1,0 +1,121 @@
+---
+import ComponentLayout from "../layouts/ComponentLayout.astro";
+import Heading from "./Heading.astro";
+
+const faqData = [
+  {
+    question: "Why Zepto Sign Customizer?",
+    answer:
+      "While others charge a premium, we deliver the same powerful features at an unbeatable price. Zepto is faster, easier to use, and completely transparent—without draining your budget.",
+  },
+  {
+    question: "Can the App Set Different Pricing Per Letter Based on Size?",
+    answer:
+      "Definitely! With Zepto’s advanced pricing options, you can set custom pricing per letter based on its width and height—giving you full control over how each design is priced.",
+  },
+  {
+    question: "Can I Show the Width and Height Calculation?",
+    answer:
+      "Yes! Zepto Sign Customizer accurately calculates and displays the width and height of each sign in the live preview. With our advanced pricing model, you can even set unique width and height rules for each font—ensuring precision and flexibility for every custom order.",
+  },
+  {
+    question: "Is Volumetric Weight Calculation Available?",
+    answer:
+      "Certainly! Zepto Sign Customizer includes volumetric weight calculation based on the dimensions of the sign. This allows you to apply accurate shipping costs based on weight. Alternatively, you can set flat shipping rates based on the product’s area—offering flexibility in how you manage logistics and pricing.",
+  },
+  {
+    question: "Can My Customers Submit a Quote Request?",
+    answer:
+      "Absolutely! Zepto Sign Customizer lets you create a fully customizable quote request form. Collect customer emails, design files, usage details, and any other necessary information. All submissions are sent directly to your email for quick follow-up and easy communication.",
+  },
+  {
+    question: "The App Is Easy to Set Up—But Can I Get Help?",
+    answer:
+      "Always! We're here whenever you need help, with expert support just a message away.",
+  },
+];
+---
+
+<section
+  class="py-15 bg-gradient-to-b from-background/30 to-background/90 pb-24"
+>
+  <Heading>Frequently Asked Questions</Heading>
+  <ComponentLayout>
+    <div class="flex flex-col gap-4" id="faq-list">
+      {
+        faqData.map((item, idx) => (
+          <div class="faq-item shadow-lg rounded-2xl overflow-hidden transition-all duration-400 ease-in-out w-full">
+            <button
+              class="faq-toggle flex flex-row w-full justify-between items-start bg-background shadow text-left p-8 text-lg font-medium cursor-pointer"
+              aria-expanded="false"
+              aria-controls={`faq-answer-${idx}`}
+              data-idx={idx}
+            >
+              <span class="text-text">{item.question}</span>
+              <span class="svg_arrow ml-2 transform transition-transform duration-200">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 text-primary"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
+            <div
+              id={`faq-answer-${idx}`}
+              class="faq-answer bg-background/40 overflow-hidden transition-all duration-500 ease-in-out px-8 leading-relaxed max-h-0 opacity-0 py-0"
+            >
+              <span>{item.answer}</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </ComponentLayout>
+</section>
+
+<script>
+  const faqList = document.getElementById("faq-list");
+
+  faqList?.addEventListener("click", (e) => {
+    const clickedButton = e.target.closest(".faq-toggle");
+    if (!clickedButton) return;
+
+    const clickedIdx = clickedButton.dataset.idx;
+    const allItems = faqList.querySelectorAll(".faq-item");
+
+    allItems.forEach((item, idx) => {
+      const content = item.querySelector(".faq-answer");
+      const icon = item.querySelector(".svg_arrow");
+      const button = item.querySelector(".faq-toggle");
+      const isClicked = clickedIdx == idx;
+
+      if (isClicked) {
+        const expanded = button.getAttribute("aria-expanded") === "true";
+        if (!expanded) {
+          content.classList.remove("max-h-0", "opacity-0", "py-0");
+          content.classList.add("max-h-[500px]", "opacity-100", "py-8");
+          button.setAttribute("aria-expanded", "true");
+          icon?.classList.add("rotate-180");
+        } else {
+          content.classList.add("max-h-0", "opacity-0", "py-0");
+          content.classList.remove("max-h-[500px]", "opacity-100", "py-8");
+          button.setAttribute("aria-expanded", "false");
+          icon?.classList.remove("rotate-180");
+        }
+      } else {
+        // Collapse all others
+        content.classList.add("max-h-0", "opacity-0", "py-0");
+        content.classList.remove("max-h-[500px]", "opacity-100", "py-8");
+        button.setAttribute("aria-expanded", "false");
+        icon?.classList.remove("rotate-180");
+      }
+    });
+  });
+</script>

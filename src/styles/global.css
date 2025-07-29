@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@import 'atropos/css';
+
+
+@theme {
+    --color-primary: #127FC4;
+    --color-secondary: #FC91F9;
+    --color-accent: #C4105F;
+    --color-accent_2: #FF4F9D;
+    /* lighter, vibrant version of accent */
+    --color-accent_3: #7A0B3C;
+    /* deeper, more saturated version of accent */
+    --color-background: #fff;
+    --color-text: #333333;
+    --font-hero: "Parkinsans", sans-serif;
+    --font-oswald: "Oswald", sans-serif;
+}
+
+* {
+    scroll-behavior: smooth;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-background);
+    /* background-image: url("./assets/background.svg"); */
+    /* background-image: url("./assets/bg.webp"); */
+    background-image: url("./assets/bg3.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(100px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.neon-text {
+    filter: drop-shadow(0 0 5px --color-primary) drop-shadow(0 0 10px --color-secondary) drop-shadow(0 0 20px #00ffff);
+    font-size: 3rem;
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 2px;
+}
+
+.parallax-effect {
+    transform-style: preserve-3d;
+    transition: all 0.125s ease-in-out;
+
+    :hover {
+        filter: drop-shadow(0 0 5px var(--color-primary)) drop-shadow(0 0 10px var(--color-secondary)) drop-shadow(0 0 20px #00ffff);
+    }
+
+    .inner-element {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        font-style: italic;
+        color: white;
+        transform: translateZ(60px);
+    }
+}
+
+footer {
+    background: url("/assets/footer-image-zepto_2.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #010103;
+}
+
+
+p {
+    font-size: 1.125rem;
+}
+
+button {
+    cursor: pointer;
+}
+
+.custom-shape {
+    position: relative;
+    border-radius: 8px;
+    clip-path: polygon(0% 0%,
+            100% 0%,
+            100% 110%,
+            75% 80%,
+            25% 80%,
+            0% 110%,
+            0% 0%);
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-shape::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    padding: 0;
+    background: linear-gradient(60deg,
+            var(--color-primary),
+            var(--color-secondary),
+            var(--color-accent),
+            var(--color-primary),
+            var(--color-secondary),
+            var(--color-primary));
+    background-size: 900% 900%;
+    filter: blur(150px);
+    animation: gradient-animate 6s alternate-reverse infinite,
+        glow-pulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    transition: background-color 0.225s ease-in-out, box-shadow 0.225s ease-in-out,
+        transform 0.225s ease-in-out;
+}
+
+.pricing-card:hover .custom-shape {
+    transition: background-color 0.225s ease-in-out, box-shadow 0.225s ease-in-out,
+        transform 0.225s ease-in-out;
+    transform: translateY(-2.5px);
+}
+
+.tryBtn {
+    position: relative;
+    color: white;
+    border: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.tryBtn::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border-radius: 8px;
+    padding: 0;
+    background: linear-gradient(205deg,
+            var(--color-primary),
+            var(--color-secondary),
+            var(--color-accent),
+            var(--color-primary),
+            var(--color-secondary),
+            var(--color-accent),
+            var(--color-primary));
+    background-size: 600% 600%;
+    filter: blur(0.5px);
+    transition: opacity 0.2s;
+    opacity: 1;
+    animation: border-gradient-animate 3s linear alternate-reverse infinite;
+}
+
+.tryBtn>* {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes border-gradient-animate {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes gradient-animate {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0px 0px var(--color-secondary),
+            0 0 0px 0px var(--color-accent);
+    }
+
+    50% {
+        box-shadow: 0 0 32px 12px var(--color-secondary),
+            0 0 64px 24px var(--color-accent);
+    }
+}
+
+/* Floating Animation Keyframes */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes floatSlow {
+    0% {
+        transform: translateY(0px);
+        transform: translateX(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+        transform: translateX(0px);
+    }
+}
+
+@keyframes floatFast {
+    0% {
+        transform: translateY(0px) scale(1);
+    }
+
+    25% {
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    50% {
+        transform: translateY(-12px) scale(1);
+    }
+
+    75% {
+        transform: translateY(-4px) scale(0.98);
+    }
+
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(360deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-continuous {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Rotate Classes */
+.rotate {
+    animation: rotate 3s linear infinite;
+}
+
+.rotate-slow {
+    animation: rotate-continuous 10s linear infinite;
+}
+
+.rotate-medium {
+    animation: rotate-continuous 5s linear infinite;
+}
+
+/* Float Classes */
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.float-slow {
+    animation: floatSlow 2s ease-in-out infinite;
+}
+
+.float-fast {
+    animation: floatFast 2s ease-in-out infinite;
+}
+
+.float-delay-1 {
+    animation-delay: 0.5s;
+}
+
+.float-delay-2 {
+    animation-delay: 1s;
+}
+
+.float-delay-3 {
+    animation-delay: 1.5s;
+}

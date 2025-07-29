@@ -1,0 +1,20 @@
+---
+import "../styles/global.css";
+import NavBar from "../components/NavBar.astro";
+import SEOHead from "../components/SEOHead.astro";
+import Footer from "../components/Footer.astro";
+
+const { head } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  {head ? <SEOHead {...head} /> : <SEOHead />}
+  <body>
+    <NavBar />
+    <main class="relative overflow-hidden">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

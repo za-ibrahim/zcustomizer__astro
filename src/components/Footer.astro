@@ -1,0 +1,37 @@
+---
+import UpperFooter from "./UpperFooter.astro";
+---
+
+<footer class="bg-[#110425]">
+  <UpperFooter />
+  <div
+    class="text-background relative py-3 px-4 flex md:flex-row-reverse flex-col items-start justify-end gap-4"
+  >
+    {
+      /* <p class="!text-base">© {(new Date()).getFullYear()} Zepto Sign Customizer. All Rights Reserved</p> */
+    }
+    <ul
+      class="list-none flex items-center justify-center gap-4 text-center md:absolute left-0 md:left-1/2 translate-x-0 md:translate-x-[-50%]"
+    >
+      <li>
+        <a class="border-b border-background" href="/contact">Contact</a>
+      </li>
+      <li>
+        <a class="border-b border-background" href="/about-us">About Us</a>
+      </li>
+      <li>
+        <a class="border-b border-background" href="/privacy-policy"
+          >Privacy Policy</a
+        >
+      </li>
+    </ul>
+    <a
+      href="https://zeptoapps.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="!text-base !font-oswald font-thin uppercase"
+    >
+      <span>© Zepto Apps</span>
+    </a>
+  </div>
+</footer>
