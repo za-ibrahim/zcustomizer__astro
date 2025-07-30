@@ -174,7 +174,7 @@ const featuresData = [
 ---
 
 <!-- new Image().src = img.src; -->
-<div class="md:hidden w-full">
+<div class="feature-body md:hidden w-full">
   <div class="feature-list flex flex-col gap-4">
     {
       featuresData?.map((feature, id) => (
@@ -236,7 +236,6 @@ const featuresData = [
     {
       featuresData.map((feature, id) => (
         <button
-          // tryBtn text-white shadow-sm
           class={`feat-item feat-toggle p-4 group rounded-xl text-left transition-colors duration-300 font-semibold cursor-pointer overflow-hidden shadow-md bg-background`}
           data-idx={id}
         >
@@ -254,8 +253,8 @@ const featuresData = [
   </div>
   <div class="z-10 relative flex-1 md:w-2/3 lg:w-3/4 bg-transparent touch-none">
     {
-      featuresData.splice(0, 1).map((feature) => (
-        <div class="atropos relative transform-3d translate-z-0">
+      featuresData.map((feature) => (
+        <div class="feat-dsk-img atropos relative transform-3d translate-z-0 !hidden">
           <div class="atropos-scale">
             <div class="atropos-rotate">
               <div class="atropos-inner">
@@ -278,8 +277,8 @@ const featuresData = [
                   />
                 )}
                 {/* <div class='px-6 py-4 text-center'>
-                                <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
-                            </div> */}
+                  <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
+                </div> */}
               </div>
             </div>
           </div>
@@ -296,45 +295,50 @@ const featuresData = [
       Atropos({ el });
     });
 
-    const featLists = document.querySelectorAll(".feature-list");
-    console.log(featLists);
-    featLists.forEach((featList) => {
-      featList?.addEventListener("click", (e) => {
-        const clickedButton = e.target.closest(".feat-toggle");
-        if (!clickedButton) return;
+    const featBody = document.querySelectorAll(".feature-body");
+    featBody.forEach((body) => {
+      const featLists = body.querySelectorAll(".feature-list");
+      const featDskImg = body.querySelectorAll(".feat-dsk-img");
+      featLists.forEach((featList) => {
+        featList?.addEventListener("click", (e) => {
+          const clickedButton = e.target.closest(".feat-toggle");
+          if (!clickedButton) return;
 
-        const clickedIdx = clickedButton.dataset.idx;
-        const allItems = featList.querySelectorAll(".feat-item");
+          const clickedIdx = clickedButton.dataset.idx;
+          const allItems = featList.querySelectorAll(".feat-item");
 
-        allItems.forEach((item, idx) => {
-          const icon = item.querySelector(".feat-toggle-icon");
-          const isClicked = clickedIdx == idx;
-          const btn = item.querySelector(".feat-toggle") ?? item;
-          const featMblImg = item.querySelector(".feat-mbl-img");
+          allItems.forEach((item, idx) => {
+            const icon = item.querySelector(".feat-toggle-icon");
+            const isClicked = clickedIdx == idx;
+            const btn = item.querySelector(".feat-toggle") ?? item;
+            const featMblImg = item.querySelector(".feat-mbl-img");
 
-          if (isClicked) {
-            btn.classList.add("tryBtn", "text-white", "shadow-sm");
-            btn.classList.remove("bg-background");
-            icon?.classList.remove("rotate-0");
-            icon?.classList.add("rotate-180");
-            featMblImg?.classList.remove("max-h-0", "opacity-0", "invisible");
-            featMblImg?.classList.add(
-              "max-h-[1000px]",
-              "opacity-100",
-              "visible"
-            );
-          } else {
-            btn.classList.remove("tryBtn", "text-white", "shadow-sm");
-            btn.classList.add("bg-background");
-            icon?.classList.add("rotate-0");
-            icon?.classList.remove("rotate-180");
-            featMblImg?.classList.add("max-h-0", "opacity-0", "invisible");
-            featMblImg?.classList.remove(
-              "max-h-[1000px]",
-              "opacity-100",
-              "visible"
-            );
-          }
+            if (isClicked) {
+              btn.classList.add("tryBtn", "text-white", "shadow-sm");
+              btn.classList.remove("bg-background");
+              icon?.classList.remove("rotate-0");
+              icon?.classList.add("rotate-180");
+              featMblImg?.classList.remove("max-h-0", "opacity-0", "invisible");
+              featMblImg?.classList.add(
+                "max-h-[1000px]",
+                "opacity-100",
+                "visible"
+              );
+              featDskImg?.[idx]?.classList.remove("!hidden");
+            } else {
+              btn.classList.remove("tryBtn", "text-white", "shadow-sm");
+              btn.classList.add("bg-background");
+              icon?.classList.add("rotate-0");
+              icon?.classList.remove("rotate-180");
+              featMblImg?.classList.add("max-h-0", "opacity-0", "invisible");
+              featMblImg?.classList.remove(
+                "max-h-[1000px]",
+                "opacity-100",
+                "visible"
+              );
+              featDskImg?.[idx]?.classList.add("!hidden");
+            }
+          });
         });
       });
     });
