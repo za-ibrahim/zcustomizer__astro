@@ -256,33 +256,39 @@ const featuresData = [
   </div>
   <div class="z-10 relative flex-1 md:w-2/3 lg:w-3/4 bg-transparent touch-none">
           {
-          featuresData.map((feature) => (
-            <div class="atroposrelative transform-3d translate-z-0">
-                {
-                    feature?.images instanceof Array ? (
-                    feature?.images.map((img) => (
+          featuresData.splice(0, 1).map((feature) => (
+            <div class="atropos relative transform-3d translate-z-0">
+              <div class="atropos-scale">
+                <div class="atropos-rotate">
+                  <div class="atropos-inner">
+                    {
+                        feature?.images instanceof Array ? (
+                        feature?.images.map((img) => (
+                            <Image
+                            src={img.src}
+                            alt={img.alt}
+                            loading="eager"
+                            style={img.style || {}}
+                            class={img.class || ""}
+                            data-atropos-offset={img.dataAtroposOffset || null}
+                            />
+                        ))
+                        ) : (
                         <Image
-                        src={img.src}
-                        alt={img.alt}
-                        loading="eager"
-                        style={img.style || {}}
-                        class={img.class || ""}
-                        data-atropos-offset={img.dataAtroposOffset || null}
+                            src={feature?.image}
+                            alt={feature?.title}
+                            class="w-full object-contain"
                         />
-                    ))
-                    ) : (
-                    <Image
-                        src={feature?.image}
-                        alt={feature?.title}
-                        class="w-full object-contain"
-                    />
-                    )
-                }
-                {
-                    /* <div class='px-6 py-4 text-center'>
-                            <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
-                        </div> */
-                }
+                        )
+                    }
+                    {
+                        /* <div class='px-6 py-4 text-center'>
+                                <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
+                            </div> */
+                    }                    
+                  </div>
+                </div>
+              </div>
             </div>
         ))}
     </div>
