@@ -81,41 +81,43 @@ const faqData = [
 </section>
 
 <script>
-  const faqList = document.getElementById("faq-list");
+  document.addEventListener("DOMContentLoaded", () => {
+    const faqList = document.getElementById("faq-list");
 
-  faqList?.addEventListener("click", (e) => {
-    const clickedButton = e.target.closest(".faq-toggle");
-    if (!clickedButton) return;
+    faqList?.addEventListener("click", (e) => {
+      const clickedButton = e.target.closest(".faq-toggle");
+      if (!clickedButton) return;
 
-    const clickedIdx = clickedButton.dataset.idx;
-    const allItems = faqList.querySelectorAll(".faq-item");
+      const clickedIdx = clickedButton.dataset.idx;
+      const allItems = faqList.querySelectorAll(".faq-item");
 
-    allItems.forEach((item, idx) => {
-      const content = item.querySelector(".faq-answer");
-      const icon = item.querySelector(".svg_arrow");
-      const button = item.querySelector(".faq-toggle");
-      const isClicked = clickedIdx == idx;
+      allItems.forEach((item, idx) => {
+        const content = item.querySelector(".faq-answer");
+        const icon = item.querySelector(".svg_arrow");
+        const button = item.querySelector(".faq-toggle");
+        const isClicked = clickedIdx == idx;
 
-      if (isClicked) {
-        const expanded = button.getAttribute("aria-expanded") === "true";
-        if (!expanded) {
-          content.classList.remove("max-h-0", "opacity-0", "py-0");
-          content.classList.add("max-h-[500px]", "opacity-100", "py-8");
-          button.setAttribute("aria-expanded", "true");
-          icon?.classList.add("rotate-180");
+        if (isClicked) {
+          const expanded = button.getAttribute("aria-expanded") === "true";
+          if (!expanded) {
+            content.classList.remove("max-h-0", "opacity-0", "py-0");
+            content.classList.add("max-h-[500px]", "opacity-100", "py-8");
+            button.setAttribute("aria-expanded", "true");
+            icon?.classList.add("rotate-180");
+          } else {
+            content.classList.add("max-h-0", "opacity-0", "py-0");
+            content.classList.remove("max-h-[500px]", "opacity-100", "py-8");
+            button.setAttribute("aria-expanded", "false");
+            icon?.classList.remove("rotate-180");
+          }
         } else {
+          // Collapse all others
           content.classList.add("max-h-0", "opacity-0", "py-0");
           content.classList.remove("max-h-[500px]", "opacity-100", "py-8");
           button.setAttribute("aria-expanded", "false");
           icon?.classList.remove("rotate-180");
         }
-      } else {
-        // Collapse all others
-        content.classList.add("max-h-0", "opacity-0", "py-0");
-        content.classList.remove("max-h-[500px]", "opacity-100", "py-8");
-        button.setAttribute("aria-expanded", "false");
-        icon?.classList.remove("rotate-180");
-      }
+      });
     });
   });
 </script>
