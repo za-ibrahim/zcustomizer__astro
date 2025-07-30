@@ -303,13 +303,15 @@ const featuresData = [
         featList?.addEventListener("click", (e) => {
           const clickedButton = e.target.closest(".feat-toggle");
           if (!clickedButton) return;
-
-          const clickedIdx = clickedButton.dataset.idx;
+          activate(0, clickedButton);
+        });
+        const activate = (clkIdx, clickedButton) => {
+          const clickedIdx = clickedButton?.dataset?.idx ?? clkIdx;
           const allItems = featList.querySelectorAll(".feat-item");
 
           allItems.forEach((item, idx) => {
-            const icon = item.querySelector(".feat-toggle-icon");
             const isClicked = clickedIdx == idx;
+            const icon = item.querySelector(".feat-toggle-icon");
             const btn = item.querySelector(".feat-toggle") ?? item;
             const featMblImg = item.querySelector(".feat-mbl-img");
 
@@ -339,7 +341,8 @@ const featuresData = [
               featDskImg?.[idx]?.classList.add("!hidden");
             }
           });
-        });
+        };
+        activate(0, null);
       });
     });
   });
