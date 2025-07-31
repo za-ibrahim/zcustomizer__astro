@@ -2,33 +2,39 @@
 import ComponentLayout from "../layouts/ComponentLayout.astro";
 import Heading from "./Heading.astro";
 
+import themeIcon from "../assets/Theme.svg";
+import customizationIcon from "../assets/Customization.svg";
+import noCodeIcon from "../assets/No-Code.svg";
+import communityIcon from "../assets/Community.svg";
+import { Image } from "astro:assets";
+
 const cards = [
   {
     title: "Theme-Friendly Integration",
     description:
       "Seamlessly integrate Zepto Sign Customizer with your existing store setup for smooth installation, easy transitions, and ongoing updates.",
-    icon: "./assets/Theme.svg",
+    icon: themeIcon,
     bg: "bg-[#dd00ff]/20",
   },
   {
     title: "Designed for Simplicity",
     description:
       "Offering a sign customization experience doesn't have to be hard—Zepto Sign Customizer is simple to use yet impressively powerful.",
-    icon: "./assets/Customization.svg",
+    icon: customizationIcon,
     bg: "bg-[#0bb6fb]/20",
   },
   {
     title: "Zero-Code Required",
     description:
       "Zepto Sign Customizer requires no coding skills and offers a user-friendly experience that feels as intuitive as using your phone.",
-    icon: "./assets/No-Code.svg",
+    icon: noCodeIcon,
     bg: "bg-[#f2b448]/20",
   },
   {
     title: "Support at Every Step",
     description:
       "Need help? Our chat and email support has you covered every step of the way.",
-    icon: "./assets/Community.svg",
+    icon: communityIcon,
     bg: "bg-[#72cc57]/20",
   },
 ];
@@ -44,7 +50,11 @@ const cards = [
             <div
               class={`w-[85px] h-[85px] shrink-0 md:ml-0 mx-auto flex items-center justify-center ${card.bg} rounded-full`}
             >
-              <img class="w-10 h-10 p-0 m-0" src={card.icon} alt={card.title} />
+              <Image
+                class="w-10 h-10 p-0 m-0"
+                src={card.icon}
+                alt={card.title}
+              />
             </div>
             <div class="flex flex-col gap-2 md:text-left text-center">
               <p class="!text-xl font-semibold">{card.title}</p>
