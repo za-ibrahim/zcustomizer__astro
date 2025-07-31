@@ -97,7 +97,7 @@ const featuresData = [
     },
 ];
 
-const TabFeatures = () => {
+const FeatureTabReact = () => {
     const [selectedTab, setSelectedTab] = useState(featuresData?.[0].id);
     const selectedFeature = featuresData?.find(feature => feature?.id === selectedTab);
 
@@ -209,4 +209,4 @@ const TabFeatures = () => {
     );
 }
 
-export default TabFeatures
+export default FeatureTabReact

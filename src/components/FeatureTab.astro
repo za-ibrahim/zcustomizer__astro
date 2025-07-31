@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image as AstroImage } from "astro:assets";
 import _1 from "../assets/dynamic/1/01.webp";
 import _1_bg from "../assets/dynamic/1/bg.webp";
 import _1_upper from "../assets/dynamic/1/upper.webp";
@@ -173,7 +173,6 @@ const featuresData = [
 ];
 ---
 
-<!-- new Image().src = img.src; -->
 <div class="feature-body md:hidden w-full">
   <div class="feature-list flex flex-col gap-4">
     {
@@ -214,9 +213,9 @@ const featuresData = [
             class={`feat-mbl-img rounded-xl rounded-t-none overflow-hidden shadow-md transition-all duration-500 ease-in-out bg-background/50 max-h-0 opacity-0 invisible`}
           >
             <div>
-              <Image
+              <AstroImage
                 loading="eager"
-                decoding="async"
+                decoding="sync"
                 src={feature?.image}
                 alt={feature?.title}
                 class="w-full object-contain"
@@ -256,99 +255,105 @@ const featuresData = [
   <div
     class="atropos z-10 relative flex-1 md:w-2/3 lg:w-3/4 bg-transparent touch-none"
   >
-    {
-      featuresData.map((feature) => (
-        <div class="atropos-scale feat-dsk-img relative transform-3d translate-z-0 !hidden">
-          <div class="atropos-rotate">
-            <div class="atropos-inner">
-              {feature?.images instanceof Array ? (
-                feature?.images.map((img) => (
-                  <Image
+    <div class="atropos-scale">
+      <div class="atropos-rotate">
+        <div class="atropos-inner">
+          {
+            featuresData.map((feature) => (
+              <div class="feat-dsk-img relative transform-3d translate-z-0 !hidden">
+                {feature?.images instanceof Array ? (
+                  feature?.images.map((img) => (
+                    <AstroImage
+                      loading="eager"
+                      decoding="sync"
+                      src={img.src}
+                      alt={img.alt}
+                      style={img.style || {}}
+                      class={`${img.class} pre-img` || ""}
+                      data-atropos-offset={img.dataAtroposOffset || null}
+                    />
+                  ))
+                ) : (
+                  <AstroImage
                     loading="eager"
-                    decoding="async"
-                    src={img.src}
-                    alt={img.alt}
-                    style={img.style || {}}
-                    class={`${img.class} pre-img` || ""}
-                    data-atropos-offset={img.dataAtroposOffset || null}
+                    decoding="sync"
+                    src={feature?.image}
+                    alt={feature?.title}
+                    class="w-full object-contain"
                   />
-                ))
-              ) : (
-                <Image
-                  loading="eager"
-                  decoding="async"
-                  src={feature?.image}
-                  alt={feature?.title}
-                  class="w-full object-contain"
-                />
-              )}
-              {/* <div class='px-6 py-4 text-center'>
-                <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
-              </div> */}
-            </div>
-          </div>
+                )}
+                {/* <div class='px-6 py-4 text-center'>
+                  <p class="leading-relaxed !text-base">{selectedFeature?.description}</p>
+                </div> */}
+              </div>
+            ))
+          }
         </div>
-      ))
-    }
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-  import Atropos from "atropos";
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".atropos").forEach((el) => {
-      Atropos({ el });
-    });
+  <script>
+    import Atropos from "atropos";
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".atropos").forEach((el) => {
+        Atropos({ el });
+      });
 
-    const featBody = document.querySelectorAll(".feature-body");
-    featBody.forEach((body) => {
-      const featLists = body.querySelectorAll(".feature-list");
-      const featDskImg = body.querySelectorAll(".feat-dsk-img");
-      featLists.forEach((featList) => {
-        featList?.addEventListener("click", (e) => {
-          const clickedButton = e.target.closest(".feat-toggle");
-          if (!clickedButton) return;
-          activate(0, clickedButton);
-        });
-        const activate = (clkIdx, clickedButton) => {
-          const clickedIdx = clickedButton?.dataset?.idx ?? clkIdx;
-          const allItems = featList.querySelectorAll(".feat-item");
-
-          allItems.forEach((item, idx) => {
-            const isClicked = clickedIdx == idx;
-            const icon = item.querySelector(".feat-toggle-icon");
-            const btn = item.querySelector(".feat-toggle") ?? item;
-            const featMblImg = item.querySelector(".feat-mbl-img");
-
-            if (isClicked) {
-              btn.classList.add("tryBtn", "text-white", "shadow-sm");
-              btn.classList.remove("bg-background");
-              icon?.classList.remove("rotate-0");
-              icon?.classList.add("rotate-180");
-              featMblImg?.classList.remove("max-h-0", "opacity-0", "invisible");
-              featMblImg?.classList.add(
-                "max-h-[1000px]",
-                "opacity-100",
-                "visible"
-              );
-              featDskImg?.[idx]?.classList.remove("!hidden");
-            } else {
-              btn.classList.remove("tryBtn", "text-white", "shadow-sm");
-              btn.classList.add("bg-background");
-              icon?.classList.add("rotate-0");
-              icon?.classList.remove("rotate-180");
-              featMblImg?.classList.add("max-h-0", "opacity-0", "invisible");
-              featMblImg?.classList.remove(
-                "max-h-[1000px]",
-                "opacity-100",
-                "visible"
-              );
-              featDskImg?.[idx]?.classList.add("!hidden");
-            }
+      const featBody = document.querySelectorAll(".feature-body");
+      featBody.forEach((body) => {
+        const featLists = body.querySelectorAll(".feature-list");
+        const featDskImg = body.querySelectorAll(".feat-dsk-img");
+        featLists.forEach((featList) => {
+          featList?.addEventListener("click", (e) => {
+            const clickedButton = e.target.closest(".feat-toggle");
+            if (!clickedButton) return;
+            activate(0, clickedButton);
           });
-        };
-        activate(0, null);
+          const activate = (clkIdx, clickedButton) => {
+            const clickedIdx = clickedButton?.dataset?.idx ?? clkIdx;
+            const allItems = featList.querySelectorAll(".feat-item");
+
+            allItems.forEach((item, idx) => {
+              const isClicked = clickedIdx == idx;
+              const icon = item.querySelector(".feat-toggle-icon");
+              const btn = item.querySelector(".feat-toggle") ?? item;
+              const featMblImg = item.querySelector(".feat-mbl-img");
+
+              if (isClicked) {
+                btn.classList.add("tryBtn", "text-white", "shadow-sm");
+                btn.classList.remove("bg-background");
+                icon?.classList.remove("rotate-0");
+                icon?.classList.add("rotate-180");
+                featMblImg?.classList.remove(
+                  "max-h-0",
+                  "opacity-0",
+                  "invisible"
+                );
+                featMblImg?.classList.add(
+                  "max-h-[1000px]",
+                  "opacity-100",
+                  "visible"
+                );
+                featDskImg?.[idx]?.classList.remove("!hidden");
+              } else {
+                btn.classList.remove("tryBtn", "text-white", "shadow-sm");
+                btn.classList.add("bg-background");
+                icon?.classList.add("rotate-0");
+                icon?.classList.remove("rotate-180");
+                featMblImg?.classList.add("max-h-0", "opacity-0", "invisible");
+                featMblImg?.classList.remove(
+                  "max-h-[1000px]",
+                  "opacity-100",
+                  "visible"
+                );
+                featDskImg?.[idx]?.classList.add("!hidden");
+              }
+            });
+          };
+          activate(0, null);
+        });
       });
     });
-  });
-</script>
+  </script>
+</div>
