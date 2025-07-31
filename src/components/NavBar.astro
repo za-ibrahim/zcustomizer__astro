@@ -14,7 +14,13 @@ import ComponentLayout from "../layouts/ComponentLayout.astro";
         {/* <Atropos shadow={false} class='relative'> */}
         <div class="w-auto h-11 rounded-md overflow-hidden">
           <a href="/">
-            <Image src={logo_v2} alt="logo" class="h-full w-auto" />
+            <Image
+              loading="eager"
+              decoding="async"
+              src={logo_v2}
+              alt="logo"
+              class="h-full w-auto"
+            />
           </a>
         </div>
         {/* </Atropos> */}
