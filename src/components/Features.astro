@@ -1,7 +1,7 @@
 ---
-import ComponentLayout from "../layouts/ComponentLayout.astro";
-import FeatureReact from "./FeatureReact.astro";
 import Heading from "./Heading.astro";
+import TabFeatures from "./TabFeatures";
+import ComponentLayout from "../layouts/ComponentLayout.astro";
 ---
 
 <div
@@ -10,6 +10,8 @@ import Heading from "./Heading.astro";
 >
   <Heading>Effective Features for Better Sales</Heading>
   <ComponentLayout>
-    <FeatureReact />
+    <!-- <FeatureReact /> -->
+    <!-- <div  class="mt-10"/> -->
+    <TabFeatures client:load />
   </ComponentLayout>
 </div>
