@@ -8,9 +8,6 @@ import Layout from "../layouts/Layout.astro";
 <Layout
   head={{
     title: "Contact Us | Zepto Sign Customizer",
-    jsCDNs: [
-      "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js",
-    ],
   }}
 >
   <div class="pt-28 bg-gradient-to-b from-background/30 to-background/90 pb-24">
@@ -97,7 +94,7 @@ import Layout from "../layouts/Layout.astro";
       const data = Object.fromEntries(formData.entries());
       data["topic"] = "Zepto Sign Customizer";
       // await emailjs.sendForm(serviceID, templateID, form, publicKey);
-      const response = await fetch("http://localhost:8000/send", {
+      const response = await fetch("https://mailer.zcustomizer.app/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
