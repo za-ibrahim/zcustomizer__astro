@@ -18,27 +18,27 @@ import Layout from "../layouts/Layout.astro";
       <Heading>Contact Us</Heading>
       <div class="max-w-3xl mx-auto">
         <form class="w-full flex flex-col gap-5">
-          <label for="from_name" class="flex flex-col gap-1">
+          <label for="name" class="flex flex-col gap-1">
             Name
             <input
               type="text"
-              name="from_name"
+              name="name"
               placeholder="Name"
               class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
             />
           </label>
-          <label for="reply_to" class="flex flex-col gap-1">
+          <label for="from" class="flex flex-col gap-1">
             Email
             <input
               required
-              name="reply_to"
+              name="from"
               placeholder="Email"
               type="email"
               class="w-full border outline-none border-text/50 px-4 py-3 rounded-lg focus:border-accent transition-all duration-200"
             />
           </label>
           <label for="myshopify_url" class="flex flex-col gap-1">
-            Myshopify URL
+            Myshopify URL (optional)
             <input
               type="text"
               name="myshopify_url"
@@ -68,7 +68,7 @@ import Layout from "../layouts/Layout.astro";
           </button>
           <span
             id="successMessage"
-            style="display: none;"
+            style="visibility: hidden;"
             class="text-sm text-center bg-accent_2 py-0.5 rounded-full text-white w-1/2 mx-auto"
             >Message sent successfully!</span
           >
@@ -93,12 +93,25 @@ import Layout from "../layouts/Layout.astro";
       submitBtn.querySelector("span:first-child").style.display = "none";
       submitBtn.querySelector("span:last-child").style.display = "inline";
       submitBtn.disabled = true;
-      await emailjs.sendForm(serviceID, templateID, form, publicKey);
-      form.reset();
-      successMessage.style.display = "block";
-      setTimeout(() => {
-        successMessage.style.display = "none";
-      }, 3000);
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data["topic"] = "Zepto Sign Customizer";
+      // await emailjs.sendForm(serviceID, templateID, form, publicKey);
+      const response = await fetch("http://localhost:8000/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (result?.status === "sent") {
+        form.reset();
+        successMessage.style.visibility = "visible";
+        setTimeout(() => {
+          successMessage.style.visibility = "hidden";
+        }, 3000);
+      }
     } catch (error) {
       console.error("Failed to send message:", error);
       alert("Failed to send message. Please try again later.");
