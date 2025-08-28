@@ -5,10 +5,13 @@ const { title, price, features } = Astro.props;
 <div class="pricing-card rounded-lg overflow-hidden shadow-md bg-background/70">
   <div class="text-center custom-shape pt-5 pb-14 stage">
     <h2 class="text-xl font-bold mb-4">{title}</h2>
-    <span
-      class="price-text !text-4xl font-semibold block txt cursor-pointer select-none"
-      >${price}</span
-    >
+    <div class="flex justify-center items-center">
+      <span
+        class="price-text !text-4xl font-semibold block txt cursor-pointer select-none"
+        >${price}</span
+      >
+      <span class="font-light text-xl">&nbsp;/ month</span>
+    </div>
   </div>
 
   <div class="p-6">
