@@ -20,34 +20,37 @@ import Heading from "./Heading.astro";
 
   <ComponentLayout>
     <div
-      class="grid lg:grid-cols-6 md:grid-cols-2 grid-cols-1 gap-6 justify-center"
+      class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 justify-center"
     >
-      <div class="hidden lg:inline-block">&nbsp;</div>
-      <div class="lg:col-span-2">
-        <PackageCard
-          title="Essential"
-          price="14.99"
-          features={[
-            "Up to 5 attributed orders per month",
-            "Unlimited customizers",
-            "All Features Included",
-            // "$2.50 per extra order, up to a total of $99.00 monthly",
-          ]}
-        />
-      </div>
-      <div class="lg:col-span-2">
-        <PackageCard
-          title="Growth"
-          price="29.99"
-          features={[
-            "Up to 15 attributed orders per month",
-            "Unlimited customizers",
-            "All Features Included",
-            // "$2.00 per extra order, up to a total of $99.00 monthly",
-          ]}
-        />
-      </div>
-      <div class="hidden lg:inline-block">&nbsp;</div>
+      <PackageCard
+        title="Essential"
+        price="14.99"
+        features={[
+          "Up to 5 attributed orders per month",
+          "Unlimited customizers",
+          "All Features Included",
+          "$2.50 per extra order, up to a total of $99.00 monthly",
+        ]}
+      />
+      <PackageCard
+        title="Growth"
+        price="29.99"
+        features={[
+          "Up to 15 attributed orders per month",
+          "Unlimited customizers",
+          "All Features Included",
+          "$2.00 per extra order, up to a total of $99.00 monthly",
+        ]}
+      />
+      <PackageCard
+        title="Unlimited"
+        price="99.99"
+        features={[
+          "Unlimited attributed orders per month",
+          "Unlimited customizers",
+          "All Features Included",
+        ]}
+      />
     </div>
   </ComponentLayout>
 </div>
