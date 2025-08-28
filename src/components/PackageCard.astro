@@ -12,10 +12,12 @@ const { title, price, features } = Astro.props;
   </div>
 
   <div class="p-6">
-    <ul class="list-none flex flex-col gap-2">
+    <ul class="list-none flex flex-col">
       {
-        features.map((feature) => (
-          <li class="leading-relaxed flex items-center justify-center gap-2">
+        features.map((feature, idx) => (
+          <li
+            class={`leading-relaxed flex items-center justify-center py-3 text-center ${idx === 0 ? "" : "border-t border-primary/10"}`}
+          >
             <span>{feature}</span>
           </li>
         ))
